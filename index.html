@@ -438,6 +438,30 @@
     padding: 20px 24px 32px;
   }
 
+  /* ─── LINE警告バナー ─── */
+  .line-warning {
+    display: none;
+    background: #06C755;
+    color: white;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 10;
+  }
+  .line-warning.show { display: block; }
+  .line-warning strong { font-size: 16px; display: block; margin-bottom: 6px; }
+  .line-warning .line-steps {
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: left;
+    line-height: 2;
+  }
+
   /* ─── Select ─── */
   .sel-field {
     width: 100%;
@@ -471,6 +495,19 @@
 </style>
 </head>
 <body>
+
+<!-- LINE ブラウザ警告バナー -->
+<div class="line-warning" id="lineWarning">
+  <strong>⚠️ LINEのブラウザをご利用中です</strong>
+  このフォームは、LINEのブラウザでは正しく動作しない場合があります。<br>
+  下記の手順で「外部ブラウザ」を開いてからご利用ください。
+  <div class="line-steps">
+    📱 Android の場合<br>
+    画面右下の「 ・・・ 」→「デフォルトのブラウザで開く」<br><br>
+    🍎 iPhone の場合<br>
+    画面右下の「 ・・・ 」→「ブラウザで開く」
+  </div>
+</div>
 
 <!-- Header -->
 <header class="site-header">
@@ -544,6 +581,27 @@
         <label for="resv-date">ご希望の日付<span class="required">必須</span></label>
         <select id="resv-date" name="date" class="sel-field">
           <option value="">日付を選んでください</option>
+          <option value="6月19日（金）">6月19日（金）</option>
+          <option value="6月20日（土）">6月20日（土）</option>
+          <option value="6月21日（日）">6月21日（日）</option>
+          <option value="6月22日（月）">6月22日（月）</option>
+          <option value="6月23日（火）">6月23日（火）</option>
+          <option value="6月24日（水）">6月24日（水）</option>
+          <option value="6月25日（木）">6月25日（木）</option>
+          <option value="6月26日（金）">6月26日（金）</option>
+          <option value="6月27日（土）">6月27日（土）</option>
+          <option value="6月28日（日）">6月28日（日）</option>
+          <option value="6月29日（月）">6月29日（月）</option>
+          <option value="6月30日（火）">6月30日（火）</option>
+          <option value="7月1日（水）">7月1日（水）</option>
+          <option value="7月2日（木）">7月2日（木）</option>
+          <option value="7月3日（金）">7月3日（金）</option>
+          <option value="7月4日（土）">7月4日（土）</option>
+          <option value="7月5日（日）">7月5日（日）</option>
+          <option value="7月6日（月）">7月6日（月）</option>
+          <option value="7月7日（火）">7月7日（火）</option>
+          <option value="7月8日（水）">7月8日（水）</option>
+          <option value="7月9日（木）">7月9日（木）</option>
         </select>
       </div>
 
@@ -551,6 +609,22 @@
         <label for="resv-time">ご希望の時間帯<span class="required">必須</span></label>
         <select id="resv-time" name="time" class="sel-field">
           <option value="">時間帯を選んでください</option>
+          <option value="10:00〜10:30">10:00〜10:30</option>
+          <option value="10:30〜11:00">10:30〜11:00</option>
+          <option value="11:00〜11:30">11:00〜11:30</option>
+          <option value="11:30〜12:00">11:30〜12:00</option>
+          <option value="12:00〜12:30">12:00〜12:30</option>
+          <option value="12:30〜13:00">12:30〜13:00</option>
+          <option value="13:00〜13:30">13:00〜13:30</option>
+          <option value="13:30〜14:00">13:30〜14:00</option>
+          <option value="14:00〜14:30">14:00〜14:30</option>
+          <option value="14:30〜15:00">14:30〜15:00</option>
+          <option value="15:00〜15:30">15:00〜15:30</option>
+          <option value="15:30〜16:00">15:30〜16:00</option>
+          <option value="16:00〜16:30">16:00〜16:30</option>
+          <option value="16:30〜17:00">16:30〜17:00</option>
+          <option value="17:00〜17:30">17:00〜17:30</option>
+          <option value="17:30〜18:00">17:30〜18:00</option>
         </select>
       </div>
     </div>
@@ -647,46 +721,13 @@
 </footer>
 
 <script>
-// ─── 日付・時間ドロップダウンを動的生成 ───────────────
+// ─── LINEブラウザ検知 ──────────────────────────────────
 (function() {
-  // 日付：今日から1ヶ月分
-  var dateEl = document.getElementById('resv-date');
-  var days   = ['日','月','火','水','木','金','土'];
-  var today  = new Date();
-  for (var i = 1; i <= 31; i++) {
-    var d = new Date(today);
-    d.setDate(today.getDate() + i);
-    var y  = d.getFullYear();
-    var m  = d.getMonth() + 1;
-    var dd = d.getDate();
-    var w  = days[d.getDay()];
-    var label = y + '年' + m + '月' + dd + '日（' + w + '）';
-    var val   = y + '-' + ('0'+m).slice(-2) + '-' + ('0'+dd).slice(-2) + '_' + w;
-    var opt   = document.createElement('option');
-    opt.value = label;
-    opt.textContent = label;
-    dateEl.appendChild(opt);
+  var ua = navigator.userAgent || '';
+  if (ua.indexOf('Line/') !== -1 || ua.indexOf('FBAN') !== -1) {
+    var el = document.getElementById('lineWarning');
+    if (el) el.classList.add('show');
   }
-
-  // 時間：10:00〜17:30の30分刻み（最終枠17:30〜18:00）
-  var timeEl = document.getElementById('resv-time');
-  var slots  = [];
-  for (var h = 10; h < 18; h++) {
-    slots.push([h, 0]);
-    slots.push([h, 30]);
-  }
-  slots.forEach(function(s) {
-    var sh = ('0'+s[0]).slice(-2);
-    var sm = ('0'+s[1]).slice(-2);
-    var eh, em;
-    if (s[1] === 30) { eh = s[0]+1; em = '00'; }
-    else             { eh = s[0];   em = '30'; }
-    var label = sh + ':' + sm + '〜' + ('0'+eh).slice(-2) + ':' + em;
-    var opt   = document.createElement('option');
-    opt.value = label;
-    opt.textContent = label;
-    timeEl.appendChild(opt);
-  });
 })();
 
 // ─── フォーム送信 ──────────────────────────────────────
