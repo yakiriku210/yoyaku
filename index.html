@@ -438,47 +438,6 @@
     padding: 20px 24px 32px;
   }
 
-  /* ─── LINE警告バナー ─── */
-  .line-warning {
-    display: block;
-    background: #06C755;
-    color: white;
-    padding: 16px 20px;
-    text-align: center;
-    font-size: 15px;
-    line-height: 1.7;
-    position: relative;
-    z-index: 10;
-  }
-  .line-warning.show { display: block; }
-  .line-warning strong { font-size: 16px; display: block; margin-bottom: 6px; padding-right: 32px; }
-  .line-warning-close {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    width: 28px;
-    height: 28px;
-    background: rgba(0,0,0,0.2);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .line-warning .line-steps {
-    background: rgba(0,0,0,0.15);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    font-size: 14px;
-    text-align: left;
-    line-height: 2;
-  }
-
   /* ─── Select ─── */
   .sel-field {
     width: 100%;
@@ -512,20 +471,6 @@
 </style>
 </head>
 <body>
-
-<!-- LINE ブラウザ警告バナー -->
-<div class="line-warning" id="lineWarning">
-  <button class="line-warning-close" onclick="document.getElementById('lineWarning').style.display='none'" aria-label="閉じる">✕</button>
-  <strong>⚠️ LINEのブラウザをご利用中です</strong>
-  このフォームは、LINEのブラウザでは正しく動作しない場合があります。<br>
-  下記の手順で「外部ブラウザ」を開いてからご利用ください。
-  <div class="line-steps">
-    📱 Android の場合<br>
-    画面右下の「 ・・・ 」→「デフォルトのブラウザで開く」<br><br>
-    🍎 iPhone の場合<br>
-    画面右下の「 ・・・ 」→「ブラウザで開く」
-  </div>
-</div>
 
 <!-- Header -->
 <header class="site-header">
@@ -561,8 +506,9 @@
       はじめての方へ
     </div>
     <div class="re-body">
-      難しいことは何もありません。<strong>画面の指示に従って選んでいただくだけ</strong>で予約が完了します。<br>
-      わからなくなったら、そのままにして大丈夫です。<strong>お電話でも受け付けています。</strong>
+      「使い方がわからない」「設定できない」<br>
+      そんなお困りごと、一緒に解決しましょう。<br>
+      下のフォームからご予約いただけます。
     </div>
     <div class="step-guide">
       <div class="step-item"><span class="step-num">1</span>お名前・電話番号を入力</div>
@@ -739,12 +685,6 @@
 </footer>
 
 <script>
-// ─── LINE案内バナーは常時表示 ──────────────────────────
-(function() {
-  var el = document.getElementById('lineWarning');
-  if (el) el.classList.add('show');
-})();
-
 // ─── フォーム送信 ──────────────────────────────────────
 async function handleSubmit(e) {
   e.preventDefault();
