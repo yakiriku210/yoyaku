@@ -440,7 +440,7 @@
 
   /* ─── LINE警告バナー ─── */
   .line-warning {
-    display: none;
+    display: block;
     background: #06C755;
     color: white;
     padding: 16px 20px;
@@ -721,13 +721,10 @@
 </footer>
 
 <script>
-// ─── LINEブラウザ検知 ──────────────────────────────────
+// ─── LINE案内バナーは常時表示 ──────────────────────────
 (function() {
-  var ua = navigator.userAgent || '';
-  if (ua.indexOf('Line/') !== -1 || ua.indexOf('FBAN') !== -1) {
-    var el = document.getElementById('lineWarning');
-    if (el) el.classList.add('show');
-  }
+  var el = document.getElementById('lineWarning');
+  if (el) el.classList.add('show');
 })();
 
 // ─── フォーム送信 ──────────────────────────────────────
