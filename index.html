@@ -545,87 +545,32 @@
     </div>
   </div>
 
-  <!-- Form -->
-  <form class="form-card" id="yoyakuForm" action="https://formspree.io/f/xeewwwwb" method="POST" onsubmit="handleSubmit(event)">
-
-    <!-- Section 1: お客様情報 -->
-    <div class="form-section">
-      <div class="section-label">お客様情報</div>
-
-      <div class="field">
-        <label for="name">お名前<span class="required">必須</span></label>
-        <input type="text" id="name" name="name" placeholder="例）山田 花子" autocomplete="name" inputmode="text">
-      </div>
-
-      <div class="field">
-        <label for="tel">電話番号<span class="required">必須</span></label>
-        <div class="field-hint">数字のみ入力してください（例：07012345678）<br>確認のご連絡をさしあげます。</div>
-        <input type="tel" id="tel" name="tel" placeholder="07012345678" autocomplete="tel" inputmode="numeric">
-      </div>
+  <!-- Form：Googleフォーム埋め込み -->
+  <div class="form-card" style="overflow:hidden;">
+    <div style="padding:20px 24px 8px; border-bottom:1px solid var(--bg2);">
+      <div class="section-label" style="margin-bottom:0;">ご予約フォーム</div>
     </div>
-
-
-    <!-- Section 3: お困りの内容 -->
-    <div class="form-section">
-      <div class="section-label">お困りの内容</div>
-      <div class="field-hint" style="margin-bottom:14px;">当てはまるものを選んでください。<br>複数選んでも大丈夫です。</div>
-
-      <div class="choices">
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="LINEのことで困っている">
-          <span class="choice-check"></span>
-          <span class="choice-text">LINEのことで困っている</span>
-        </label>
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="スマホの基本的な使い方">
-          <span class="choice-check"></span>
-          <span class="choice-text">スマホの基本的な使い方</span>
-        </label>
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="写真・動画の保存・整理">
-          <span class="choice-check"></span>
-          <span class="choice-text">写真・動画の保存・整理</span>
-        </label>
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="アプリのインストール・削除">
-          <span class="choice-check"></span>
-          <span class="choice-text">アプリのインストール・削除</span>
-        </label>
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="インターネットの使い方">
-          <span class="choice-check"></span>
-          <span class="choice-text">インターネットの使い方</span>
-        </label>
-        <label class="choice-item">
-          <input type="checkbox" name="content" value="その他">
-          <span class="choice-check"></span>
-          <span class="choice-text">その他</span>
-        </label>
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSd3pl4KnVYr-0hOumGjLf7Hcs_UWdTVPfCE3LA4bRsleq6yYg/viewform?embedded=true"
+      width="100%"
+      height="680"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      style="display:block;">
+      読み込んでいます…
+    </iframe>
+    <div style="padding:16px 24px; background:var(--bg); border-top:1px solid var(--bg2); text-align:center;">
+      <div style="font-size:14px; color:var(--ink2); margin-bottom:12px;">
+        送信後、空き時間を選んで予約を確定してください
       </div>
+      <a href="https://calendar.app.google/SL4iUTBdbKHCX9BT6"
+         target="_blank"
+         style="display:inline-block; padding:14px 28px; background:var(--accent); color:white; border-radius:var(--radius-sm); font-size:16px; font-weight:700; text-decoration:none; letter-spacing:0.04em;">
+        ② 空き時間を選んで予約する →
+      </a>
     </div>
-
-    <!-- Section 4: ご要望 -->
-    <div class="form-section">
-      <div class="section-label">ご要望・メモ</div>
-      <div class="field">
-        <label for="memo">ご自由にお書きください<span class="optional">任意</span></label>
-        <div class="field-hint">「○月○日が都合がいい」「息子のスマホも一緒に見てほしい」など、なんでもどうぞ。</div>
-        <textarea id="memo" name="memo" placeholder="ご自由にお書きください"></textarea>
-      </div>
-    </div>
-
-    <!-- Submit -->
-    <div class="submit-area">
-      <div class="privacy-note">
-        ご入力いただいた情報は、ご予約確認のみに使用し、<br>第三者に提供することはありません。
-      </div>
-      <button type="submit" class="btn-submit" id="btnSubmit">
-        ① 入力内容を送信して、日時を選ぶ
-      </button>
-      <div class="btn-divider">↓ 送信後、カレンダーで空き枠を選んでください</div>
-    </div>
-
-  </form>
+  </div>
 
   <!-- Tel fallback -->
   <div class="tel-fallback">
