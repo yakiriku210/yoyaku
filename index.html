@@ -438,6 +438,30 @@
     padding: 20px 24px 32px;
   }
 
+  /* ─── Select ─── */
+  .sel-field {
+    width: 100%;
+    padding: 14px 44px 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 18px;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--white);
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%234A4A6A' d='M3 5l5 6 5-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .sel-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(46,95,163,0.12);
+  }
+
   @media (max-width: 400px) {
     body { font-size: 17px; }
     .site-header .brand-name { font-size: 15px; }
@@ -514,34 +538,20 @@
     <!-- Section 2: ご希望日時 -->
     <div class="form-section">
       <div class="section-label">ご希望の日時</div>
-      <div class="field-hint" style="margin-bottom:14px;">ご都合のよい時間帯を1つ選んでください。<br>※日程はこちらで確認後、お電話でご連絡します。</div>
+      <div class="field-hint" style="margin-bottom:14px;">ご希望の日付と時間帯を選んでください。<br>※確定後、お電話にてご連絡いたします。</div>
 
-      <div class="choices" id="dateChoices">
-        <label class="choice-item">
-          <input type="radio" name="datetime" value="平日午前（10時〜12時）">
-          <span class="choice-dot"></span>
-          <span class="choice-text">平日　午前（10時〜12時）<span class="choice-sub">月・火・水・木・金</span></span>
-        </label>
-        <label class="choice-item">
-          <input type="radio" name="datetime" value="平日午後（13時〜17時）">
-          <span class="choice-dot"></span>
-          <span class="choice-text">平日　午後（13時〜17時）<span class="choice-sub">月・火・水・木・金</span></span>
-        </label>
-        <label class="choice-item">
-          <input type="radio" name="datetime" value="土日午前（10時〜12時）">
-          <span class="choice-dot"></span>
-          <span class="choice-text">土日　午前（10時〜12時）<span class="choice-sub">土曜・日曜</span></span>
-        </label>
-        <label class="choice-item">
-          <input type="radio" name="datetime" value="土日午後（13時〜17時）">
-          <span class="choice-dot"></span>
-          <span class="choice-text">土日　午後（13時〜17時）<span class="choice-sub">土曜・日曜</span></span>
-        </label>
-        <label class="choice-item">
-          <input type="radio" name="datetime" value="その他（備考に記入）">
-          <span class="choice-dot"></span>
-          <span class="choice-text">その他<span class="choice-sub">下の「ご要望」欄に詳しくお書きください</span></span>
-        </label>
+      <div class="field">
+        <label for="resv-date">ご希望の日付<span class="required">必須</span></label>
+        <select id="resv-date" name="date" class="sel-field">
+          <option value="">日付を選んでください</option>
+        </select>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label for="resv-time">ご希望の時間帯<span class="required">必須</span></label>
+        <select id="resv-time" name="time" class="sel-field">
+          <option value="">時間帯を選んでください</option>
+        </select>
       </div>
     </div>
 
@@ -627,7 +637,6 @@
     <div class="success-title">送信が完了しました！</div>
     <div class="success-body">
       ご予約ありがとうございます。<br>
-      内容を確認して、<strong>お電話にてご連絡</strong>いたします。<br><br>
       しばらくお待ちください。
     </div>
   </div>
@@ -638,13 +647,57 @@
 </footer>
 
 <script>
+// ─── 日付・時間ドロップダウンを動的生成 ───────────────
+(function() {
+  // 日付：今日から1ヶ月分
+  var dateEl = document.getElementById('resv-date');
+  var days   = ['日','月','火','水','木','金','土'];
+  var today  = new Date();
+  for (var i = 1; i <= 31; i++) {
+    var d = new Date(today);
+    d.setDate(today.getDate() + i);
+    var y  = d.getFullYear();
+    var m  = d.getMonth() + 1;
+    var dd = d.getDate();
+    var w  = days[d.getDay()];
+    var label = y + '年' + m + '月' + dd + '日（' + w + '）';
+    var val   = y + '-' + ('0'+m).slice(-2) + '-' + ('0'+dd).slice(-2) + '_' + w;
+    var opt   = document.createElement('option');
+    opt.value = label;
+    opt.textContent = label;
+    dateEl.appendChild(opt);
+  }
+
+  // 時間：10:00〜17:30の30分刻み（最終枠17:30〜18:00）
+  var timeEl = document.getElementById('resv-time');
+  var slots  = [];
+  for (var h = 10; h < 18; h++) {
+    slots.push([h, 0]);
+    slots.push([h, 30]);
+  }
+  slots.forEach(function(s) {
+    var sh = ('0'+s[0]).slice(-2);
+    var sm = ('0'+s[1]).slice(-2);
+    var eh, em;
+    if (s[1] === 30) { eh = s[0]+1; em = '00'; }
+    else             { eh = s[0];   em = '30'; }
+    var label = sh + ':' + sm + '〜' + ('0'+eh).slice(-2) + ':' + em;
+    var opt   = document.createElement('option');
+    opt.value = label;
+    opt.textContent = label;
+    timeEl.appendChild(opt);
+  });
+})();
+
+// ─── フォーム送信 ──────────────────────────────────────
 async function handleSubmit(e) {
   e.preventDefault();
 
   // バリデーション
-  const name     = document.getElementById('name').value.trim();
-  const tel      = document.getElementById('tel').value.trim();
-  const datetime = document.querySelector('input[name="datetime"]:checked');
+  const name = document.getElementById('name').value.trim();
+  const tel  = document.getElementById('tel').value.trim();
+  const date = document.getElementById('resv-date').value;
+  const time = document.getElementById('resv-time').value;
 
   if (!name) {
     alert('お名前を入力してください。');
@@ -656,8 +709,14 @@ async function handleSubmit(e) {
     document.getElementById('tel').focus();
     return;
   }
-  if (!datetime) {
-    alert('ご希望の日時を1つ選んでください。');
+  if (!date) {
+    alert('ご希望の日付を選んでください。');
+    document.getElementById('resv-date').focus();
+    return;
+  }
+  if (!time) {
+    alert('ご希望の時間帯を選んでください。');
+    document.getElementById('resv-time').focus();
     return;
   }
 
