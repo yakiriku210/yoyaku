@@ -451,7 +451,24 @@
     z-index: 10;
   }
   .line-warning.show { display: block; }
-  .line-warning strong { font-size: 16px; display: block; margin-bottom: 6px; }
+  .line-warning strong { font-size: 16px; display: block; margin-bottom: 6px; padding-right: 32px; }
+  .line-warning-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .line-warning .line-steps {
     background: rgba(0,0,0,0.15);
     border-radius: 8px;
@@ -498,6 +515,7 @@
 
 <!-- LINE ブラウザ警告バナー -->
 <div class="line-warning" id="lineWarning">
+  <button class="line-warning-close" onclick="document.getElementById('lineWarning').style.display='none'" aria-label="閉じる">✕</button>
   <strong>⚠️ LINEのブラウザをご利用中です</strong>
   このフォームは、LINEのブラウザでは正しく動作しない場合があります。<br>
   下記の手順で「外部ブラウザ」を開いてからご利用ください。
