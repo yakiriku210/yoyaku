@@ -493,7 +493,7 @@
   </div>
 
   <!-- Form -->
-  <form class="form-card" id="yoyakuForm" onsubmit="handleSubmit(event)" novalidate>
+  <form class="form-card" id="yoyakuForm" action="https://formspree.io/f/xeewwwwb" method="POST" onsubmit="handleSubmit(event)" novalidate>
 
     <!-- Section 1: お客様情報 -->
     <div class="form-section">
@@ -638,12 +638,12 @@
 </footer>
 
 <script>
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
 
-  // 簡易バリデーション
-  const name = document.getElementById('name').value.trim();
-  const tel  = document.getElementById('tel').value.trim();
+  // バリデーション
+  const name     = document.getElementById('name').value.trim();
+  const tel      = document.getElementById('tel').value.trim();
   const datetime = document.querySelector('input[name="datetime"]:checked');
 
   if (!name) {
@@ -661,10 +661,37 @@ function handleSubmit(e) {
     return;
   }
 
-  // ここを実際のGoogleフォームURLに差し替え可能
-  // 今はデモとして成功画面だけ表示
-  document.getElementById('overlay').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ボタンを送信中に変える
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '送信中...';
+  btn.disabled = true;
+
+  // Formspreeに送信
+  const form = document.getElementById('yoyakuForm');
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // 成功
+      document.getElementById('overlay').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      form.reset();
+    } else {
+      const json = await res.json();
+      alert('送信に失敗しました。お電話にてご連絡ください。\n070-1525-2658');
+    }
+  } catch (err) {
+    alert('通信エラーが発生しました。お電話にてご連絡ください。\n070-1525-2658');
+  }
+
+  btn.textContent = 'この内容で予約する';
+  btn.disabled = false;
 }
 
 // overlay外クリックで閉じる
