@@ -438,6 +438,34 @@
     padding: 20px 24px 32px;
   }
 
+  /* ─── カレンダーボタン ─── */
+  .btn-calendar {
+    display: block;
+    width: 100%;
+    padding: 18px 24px;
+    background: var(--white);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    font-size: 18px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 12px;
+    -webkit-appearance: none;
+    text-align: center;
+  }
+  .btn-calendar:hover { background: var(--accent); color: var(--white); }
+  .btn-calendar:active { transform: scale(0.98); }
+  .btn-divider {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink2);
+    margin: 16px 0 4px;
+  }
+
   /* ─── Select ─── */
   .sel-field {
     width: 100%;
@@ -647,9 +675,10 @@
       <div class="privacy-note">
         ご入力いただいた情報は、ご予約確認のみに使用し、<br>第三者に提供することはありません。
       </div>
-      <button type="submit" class="btn-submit">
-        この内容で予約する
+      <button type="submit" class="btn-submit" id="btnSubmit">
+        ① 入力内容を送信して、日時を選ぶ
       </button>
+      <div class="btn-divider">↓ 送信後、カレンダーで空き枠を選んでください</div>
     </div>
 
   </form>
@@ -666,19 +695,7 @@
 
 </div><!-- /container -->
 
-<!-- Success overlay -->
-<div class="overlay" id="overlay">
-  <div class="success-card">
-    <div class="success-icon">
-      <svg viewBox="0 0 34 34" fill="none"><path d="M6 17l8 8 14-14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="success-title">送信が完了しました！</div>
-    <div class="success-body">
-      ご予約ありがとうございます。<br>
-      しばらくお待ちください。
-    </div>
-  </div>
-</div>
+<!-- Success overlay 削除済み（カレンダーへリダイレクト） -->
 
 <footer class="site-footer">
   © 2026 スマホ安心サポート　担当：山﨑 陸
